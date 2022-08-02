@@ -68,6 +68,8 @@ namespace CosmosGettingStartedTutorial
             await this.ReplaceFamilyItemAsync();
 
             await this.DeleteFamilyItemAsync();
+
+            await this.DeleteDatabaseAndCleanupAsync();
         }
 
         /// <summary>
@@ -227,6 +229,20 @@ namespace CosmosGettingStartedTutorial
             // Delete an item. Note we must provide the partition key value and id of the item to delete
             ItemResponse<Family> wakefieldFamilyResponse = await this.container.DeleteItemAsync<Family>(familyId, new PartitionKey(partitionKeyValue));
             Console.WriteLine("Deleted Family [{0},{1}]\n", partitionKeyValue, familyId);
+        }
+
+        /// <summary>
+        /// Delete the database and dispose of the Cosmos Client instance
+        /// </summary>
+        private async Task DeleteDatabaseAndCleanupAsync()
+        {
+            DatabaseResponse databaseResourceResponse = await this.database.DeleteAsync();
+            // Also valid: await this.cosmosClient.Databases["FamilyDatabase"].DeleteAsync();
+
+            Console.WriteLine("Deleted Database: {0}\n", this.databaseId);
+
+            //Dispose of CosmosClient
+            this.cosmosClient.Dispose();
         }
         private async Task CreateDatabaseAsync()
         {
