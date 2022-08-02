@@ -69,7 +69,7 @@ namespace CosmosGettingStartedTutorial
 
             await this.DeleteFamilyItemAsync();
 
-            await this.DeleteDatabaseAndCleanupAsync();
+            //await this.DeleteDatabaseAndCleanupAsync();
         }
 
         /// <summary>
